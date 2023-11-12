@@ -1,11 +1,11 @@
 import Image from "next/image";
 
-const Card = () => {
+const Card = (props) => {
   return (
     <div className=" flex flex-col justify-start h-[450px] w-[300px]  bg-gray-200">
       <div className="h-1/2 w-full relative">
         <Image
-          src="/images/nirvanexp.jpeg"
+          src={props.image}
           fill
           style={{ objectFit: "cover" }}
         />
