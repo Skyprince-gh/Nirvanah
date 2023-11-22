@@ -1,8 +1,13 @@
 import Navbar from "../components/Nav/Navigation";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import Image from "next/image";
 import Card from "../components/Cards/card";
-import { Instagram, MusicNote } from "@mui/icons-material";
+import {
+  Instagram,
+  MusicNote,
+  ArrowBackIos,
+  ArrowForwardIos,
+} from "@mui/icons-material";
 import Head from "next/head";
 import Link from "next/link";
 // import Carousel from "../components/Special/carousel";
@@ -13,6 +18,37 @@ export default function HomePage() {
     " xsm:min-w-full min-w-full sm:min-w-screen-md md:min-w-screen-lg lg:min-w-screen-xl xl:min-w-screen-2xl";
   const fullHeightOnAllScreens =
     "xsm:min-h-screen min-h-screen sm:min-h-screen-md md:min-h-screen-lg lg:min-h-screen-xl xl:min-h-screen-2xl";
+
+  const images = [
+    "/images/trumpet.jpeg",
+    "/images/carousel 2.jpeg",
+    "/images/carousel 3.jpeg",
+  ];
+  const [currentIndex, setCurretentIndex] = useState(0);
+
+  useEffect(() => {
+    // const interval = setInterval(() => {
+    //   nextImage();
+    // }, 3000);
+
+    // return () => clearInterval(interval)
+  }, []);
+
+  const nextImage = () => {
+    if (currentIndex === images.length - 1) {
+      setCurretentIndex(0);
+    } else {
+      setCurretentIndex(currentIndex + 1);
+    }
+  };
+
+  const previousImage = () => {
+    if (currentIndex === 0) {
+      setCurretentIndex(images.length - 1);
+    } else {
+      setCurretentIndex(currentIndex - 1);
+    }
+  };
 
   return (
     <Fragment>
@@ -38,7 +74,7 @@ export default function HomePage() {
                 {num2}
               </h1>
               <div className="flex flex-col items-start w-11/12 xsm:m-10 md:m-5 lg:m-2 xsm:text-center xsm:block sm:text-left">
-                <p className="text-[20px]">Discover the best Concert</p>
+                <p className="text-[20px]">Discover the best. Concert</p>
                 <p className="text-[20px]">Show Tailored to your taste</p>
                 <button className="h-10 sm:h-12 bg-[#303C57] px-5 sm:px-6 mt-5 sm:mt-10">
                   Find a concert
@@ -82,11 +118,38 @@ export default function HomePage() {
           Highlights
         </h2>
         <div className="w-full relative h-[900px]">
-         {/* <Carousel></Carousel> */}
-           <Image
+          <Image
             fill
-            src="/images/trumpet.jpeg"
-            style={{ objectFit: "cover" }}
+            src={images[currentIndex]}
+            style={{
+              objectFit: "cover",
+              zIndex: "-5",
+              position: "absolute",
+              top: "0px",
+              left: "0px",
+            }}
+          />
+          <ArrowBackIos
+            style={{
+              fontSize: "100px",
+              color: "white",
+              zIndex: "5",
+              position: "absolute",
+              top: "50%",
+              left: "5px",
+            }}
+            onClick={previousImage}
+          />
+          <ArrowForwardIos
+            style={{
+              fontSize: "100px",
+              color: "white",
+              zIndex: "5",
+              position: "absolute",
+              top: "50%",
+              right: "5px",
+            }}
+            onClick={nextImage}
           />
         </div>
       </div>
@@ -97,9 +160,14 @@ export default function HomePage() {
         <p className="xsm:absolute md:static bottom-0">
           &copy; 2023 The Nirvana Experience
         </p>
-        <div className="xsm:absolute md:static ">
-          <Link href="https://instagram.com/the.nirvanaexperience?igshid=MzRlODBiNWFlZA==" ><Instagram style={{ fontSize: "50px" }} /></Link>
-         <Link href="https://www.tiktok.com/@thenirvanaexperience?_t=8gbCKqtzvwD&_r=1"> <MusicNote style={{ fontSize: "50px" }} /></Link>
+        <div className="xsm:absolute md:static font-bold">
+          <Link href="https://instagram.com/the.nirvanaexperience?igshid=MzRlODBiNWFlZA==">
+            <Instagram style={{ fontSize: "50px" }} /> <span>Instagram</span>
+          </Link>
+          <Link href="https://www.tiktok.com/@thenirvanaexperience?_t=8gbCKqtzvwD&_r=1">
+            {" "}
+            <MusicNote style={{ fontSize: "50px" }} /> <span>Tiktok</span>
+          </Link>
         </div>
       </div>
     </Fragment>
