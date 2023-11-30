@@ -10,7 +10,7 @@ import {
 } from "@mui/icons-material";
 import Head from "next/head";
 import Link from "next/link";
-// import Carousel from "../components/Special/carousel";
+import Carousel from "../components/Special/carousel";
 
 export default function HomePage() {
   const [num2, setNum2] = useState("THE NIRVANA EXPERIENCE");
@@ -19,20 +19,24 @@ export default function HomePage() {
   const fullHeightOnAllScreens =
     "xsm:min-h-screen min-h-screen sm:min-h-screen-md md:min-h-screen-lg lg:min-h-screen-xl xl:min-h-screen-2xl";
 
-  const images = [
+  const [images, setImages] = useState([
     "/images/trumpet.jpeg",
     "/images/carousel 2.jpeg",
     "/images/carousel 3.jpeg",
-  ];
+  ]);
   const [currentIndex, setCurretentIndex] = useState(0);
 
   useEffect(() => {
-    // const interval = setInterval(() => {
-    //   nextImage();
-    // }, 3000);
-
-    // return () => clearInterval(interval)
+    nextImage();
   }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextImage();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [currentIndex]);
 
   const nextImage = () => {
     if (currentIndex === images.length - 1) {
@@ -74,8 +78,10 @@ export default function HomePage() {
                 {num2}
               </h1>
               <div className="flex flex-col items-start w-11/12 xsm:m-10 md:m-5 lg:m-2 xsm:text-center xsm:block sm:text-left">
-                <p className="text-[20px]">Discover the best. Concert</p>
-                <p className="text-[20px]">Show Tailored to your taste</p>
+                <p className="text-[20px]">
+                  Gifting individuals with the best of experiences
+                </p>
+                {/* <p className="text-[20px]">Shows Tailored to your taste</p> */}
                 <button className="h-10 sm:h-12 bg-[#303C57] px-5 sm:px-6 mt-5 sm:mt-10">
                   Find a concert
                 </button>
@@ -109,7 +115,7 @@ export default function HomePage() {
       <div className="w-11/12 flex gap-[150px] xsm:flex xsm:flex-col xsm:items-center md:flex-row md:gap-[50px] sm:gap-[20px] justify-center mx-auto my-0 pt-24">
         {/* Another component */}
         <Card image="/images/nirvanexp.jpeg" />
-        <Card image="/images/organizer_Hakeem.jpeg" />
+        <Card image="/images/card_image.jpeg" />
         <Card image="/images/upcoming.jpeg" />
       </div>
 
@@ -118,6 +124,7 @@ export default function HomePage() {
           Highlights
         </h2>
         <div className="w-full relative h-[900px]">
+          {/* <Carousel images={images} /> */}
           <Image
             fill
             src={images[currentIndex]}

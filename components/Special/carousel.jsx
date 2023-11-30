@@ -1,50 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
-const Carousel = ({ images, height }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const goToPrevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
-  };
-
-  const goToNextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
-  };
+const Carousel = ({ images, heightClass }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(goToNextSlide, 5000); // Change slide every 5 seconds
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000);
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, [currentIndex]);
+    return () => clearInterval(interval);
+  }, [images]);
 
   return (
-    <div className={`relative w-full h-${height}`}>
-      <div className="absolute top-1/2 transform -translate-y-1/2 left-0 z-10">
-        <button className="bg-gray-300 p-2 rounded-full text-gray-700 mr-2" onClick={goToPrevSlide}>
-          &lt;
-        </button>
-      </div>
-      <div className="absolute top-1/2 transform -translate-y-1/2 right-0 z-10">
-        <button className="bg-gray-300 p-2 rounded-full text-gray-700 ml-2" onClick={goToNextSlide}>
-          &gt;
-        </button>
-      </div>
-      <div className="w-full h-full flex items-center justify-center">
-        {/* <img
-          src={images[currentIndex]}
-          
-          className="w-full h-full object-cover"
-          /> */}
+    <div className={`relative ${heightClass}`}>
+      {images.map((image, index) => (
         <Image
-            fill
-            src={images[currentIndex]}
-            // src="/images/trumpet.jpeg"
-            alt={`Slide ${currentIndex + 1}`}
-            style={{ objectFit: "cover" }}
-          />
-      </div>
+          key={index}
+          src={image}
+          fill
+          alt={`carousel-${index}`}
+          // className={`absolute top-0 left-0 w-full h-full transition-opacity ${
+          //   index === currentImageIndex ? 'opacity-100' : 'opacity-0'
+          // }`}
+          style={{
+            objectFit: "cover",
+            zIndex: "-5",
+            position: "absolute",
+            top: "0px",
+            left: "0px",
+          }}
+        />
+      ))}
     </div>
   );
 };
