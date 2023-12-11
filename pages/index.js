@@ -10,7 +10,7 @@ import {
 } from "@mui/icons-material";
 import Head from "next/head";
 import Link from "next/link";
-import Carousel from "../components/Special/carousel";
+
 
 export default function HomePage() {
   const [num2, setNum2] = useState("THE NIRVANA EXPERIENCE");
@@ -23,6 +23,7 @@ export default function HomePage() {
     "/images/trumpet.jpeg",
     "/images/carousel 2.jpeg",
     "/images/carousel 3.jpeg",
+    "/videos/vid1.mp4",
   ]);
   const [currentIndex, setCurretentIndex] = useState(0);
 
@@ -31,9 +32,17 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      nextImage();
-    }, 5000);
+    let interval = null;
+
+    if (currentIndex === 3) {
+      interval = setInterval(() => {
+        nextImage();
+      }, 20000);
+    } else {
+      interval = setInterval(() => {
+        nextImage();
+      }, 5000);
+    }
 
     return () => clearInterval(interval);
   }, [currentIndex]);
@@ -52,6 +61,10 @@ export default function HomePage() {
     } else {
       setCurretentIndex(currentIndex - 1);
     }
+  };
+
+  const changeImage = (index) => {
+    setCurretentIndex(index);
   };
 
   return (
@@ -125,39 +138,47 @@ export default function HomePage() {
         </h2>
         <div className="w-full relative h-[900px]">
           {/* <Carousel images={images} /> */}
-          <Image
-            fill
-            src={images[currentIndex]}
-            style={{
-              objectFit: "cover",
-              zIndex: "-5",
-              position: "absolute",
-              top: "0px",
-              left: "0px",
-            }}
-          />
-          <ArrowBackIos
-            style={{
-              fontSize: "100px",
-              color: "white",
-              zIndex: "5",
-              position: "absolute",
-              top: "50%",
-              left: "5px",
-            }}
-            onClick={previousImage}
-          />
-          <ArrowForwardIos
-            style={{
-              fontSize: "100px",
-              color: "white",
-              zIndex: "5",
-              position: "absolute",
-              top: "50%",
-              right: "5px",
-            }}
-            onClick={nextImage}
-          />
+          {currentIndex !== 3 && (
+            <Image
+              fill
+              src={images[currentIndex]}
+              style={{
+                objectFit: "cover",
+                zIndex: "-5",
+                position: "absolute",
+                top: "0px",
+                left: "0px",
+              }}
+            />
+          )}
+
+          {currentIndex === 3 && (
+            <div className="w-full h-full bg-[url(/images/obm.jpeg)] bg-cover bg-no-repeat">
+              <video
+                className="absolute inset-0 w-full h-full"
+                autoPlay
+                muted
+                loop
+                playsInline
+              >
+                <source src={images[currentIndex]} type="video/mp4" />
+                {/* Add other video sources for different formats if needed */}
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          )}
+          <div
+            className={`w-[200px] flex justify-center items-center  absolute bottom-16 gap-4 h-10 left-2/4 -translate-x-2/4`}
+          >
+            {images.map((image, index) => (
+              <div
+                className={`w-5 h-5 ${
+                  currentIndex === index ? "bg-[wheat]" : "bg-green-800"
+                } rounded-md bottom-5`}
+                onClick={(e) => changeImage(index)}
+              ></div>
+            ))}
+          </div>
         </div>
       </div>
       <div
