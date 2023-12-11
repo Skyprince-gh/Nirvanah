@@ -31,7 +31,7 @@ export default function Navbar() {
         <div className="flex justify-center md:hidden sm:pr-10 xsm:pr-2 text-[wheat]">
           <Menu style={{ color: "wheat" }} onClick={toggleMenu} />
           {isToggled && (
-            <ul className="w-full rounded-lg h-full p-3 absolute top-16 left-0 bg-black bg-opacity-90 text-3xl flex flex-col gap-16 items-center pt-16 animate__animated animate__fadeInDown" onClick={toggleMenu}>
+            <ul className="fixed w-full rounded-lg h-full p-3 top-16 left-0 bg-black bg-opacity-90 text-3xl flex flex-col gap-16 items-center pt-16 animate__animated animate__fadeInDown" onClick={toggleMenu}>
               <Link href="#home">
                 <li className="active:text-yellow-300">Home</li>
               </Link>

@@ -11,7 +11,6 @@ import {
 import Head from "next/head";
 import Link from "next/link";
 
-
 export default function HomePage() {
   const [num2, setNum2] = useState("THE NIRVANA EXPERIENCE");
   const fullWidthOnAllScreens =
@@ -137,48 +136,17 @@ export default function HomePage() {
           Highlights
         </h2>
         <div className="w-full relative h-[900px]">
-          {/* <Carousel images={images} /> */}
-          {currentIndex !== 3 && (
-            <Image
-              fill
-              src={images[currentIndex]}
-              style={{
-                objectFit: "cover",
-                zIndex: "-5",
-                position: "absolute",
-                top: "0px",
-                left: "0px",
-              }}
-            />
-          )}
-
-          {currentIndex === 3 && (
-            <div className="w-full h-full bg-[url(/images/obm.jpeg)] bg-cover bg-no-repeat">
-              <video
-                className="absolute inset-0 w-full h-full"
-                autoPlay
-                muted
-                loop
-                playsInline
-              >
-                <source src={images[currentIndex]} type="video/mp4" />
-                {/* Add other video sources for different formats if needed */}
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          )}
-          <div
-            className={`w-[200px] flex justify-center items-center  absolute bottom-16 gap-4 h-10 left-2/4 -translate-x-2/4`}
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
           >
-            {images.map((image, index) => (
-              <div
-                className={`w-5 h-5 ${
-                  currentIndex === index ? "bg-[wheat]" : "bg-green-800"
-                } rounded-md bottom-5`}
-                onClick={(e) => changeImage(index)}
-              ></div>
-            ))}
-          </div>
+            <source src="/videos/vid1.mp4" type="video/mp4" />
+            {/* Add other video sources for different formats if needed */}
+            Your browser does not support the video tag.
+          </video>
         </div>
       </div>
       <div
