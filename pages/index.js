@@ -19,9 +19,12 @@ export default function HomePage() {
     "xsm:min-h-screen min-h-screen sm:min-h-screen-md md:min-h-screen-lg lg:min-h-screen-xl xl:min-h-screen-2xl";
 
   const [images, setImages] = useState([
-    "/images/trumpet.jpeg",
-    "/images/carousel 2.jpeg",
-    "/images/carousel 3.jpeg",
+    "/images/Experience_2023/1.png",
+    "/images/Experience_2023/2.png",
+    "/images/Experience_2023/3.png",
+    "/images/Experience_2023/4.png",
+    "/images/Experience_2023/5.png",
+    "/images/Experience_2023/6.png",
     "/videos/vid1.mp4",
   ]);
   const [currentIndex, setCurretentIndex] = useState(0);
@@ -136,17 +139,47 @@ export default function HomePage() {
           Highlights
         </h2>
         <div className="w-full relative h-[900px]">
-          <video
-            className="absolute inset-0 w-full h-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
+          {currentIndex !== 6 && (
+            <Image
+              fill
+              src={images[currentIndex]}
+              style={{
+                objectFit: "cover",
+                zIndex: "-5",
+                position: "absolute",
+                top: "0px",
+                left: "0px",
+              }}
+            />
+          )}
+
+          {currentIndex === 6 && (
+            <div className="w-full h-full bg-[url(/images/obm.jpeg)] bg-cover bg-no-repeat">
+              <video
+                className="absolute inset-0 w-full h-full"
+                autoPlay
+                muted
+                loop
+                playsInline
+              >
+                <source src={images[currentIndex]} type="video/mp4" />
+                {/* Add other video sources for different formats if needed */}
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          )}
+          <div
+            className={`w-[200px] flex justify-center items-center  absolute bottom-16 gap-4 h-10 left-2/4 -translate-x-2/4`}
           >
-            <source src="/videos/vid1.mp4" type="video/mp4" />
-            {/* Add other video sources for different formats if needed */}
-            Your browser does not support the video tag.
-          </video>
+            {images.map((image, index) => (
+              <div
+                className={`w-5 h-5 ${
+                  currentIndex === index ? "bg-[wheat]" : "bg-green-800"
+                } rounded-md bottom-5`}
+                onClick={(e) => changeImage(index)}
+              ></div>
+            ))}
+          </div>
         </div>
       </div>
       <div
