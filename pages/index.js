@@ -2,14 +2,9 @@ import Navbar from "../components/Nav/Navigation";
 import { Fragment, useState, useEffect } from "react";
 import Image from "next/image";
 import Card from "../components/Cards/card";
-import {
-  Instagram,
-  MusicNote,
-  ArrowBackIos,
-  ArrowForwardIos,
-} from "@mui/icons-material";
+import Footer from "../components/footer";
 import Head from "next/head";
-import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function HomePage() {
   const [num2, setNum2] = useState("THE NIRVANA EXPERIENCE");
@@ -28,6 +23,7 @@ export default function HomePage() {
     "/videos/vid1.mp4",
   ]);
   const [currentIndex, setCurretentIndex] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     nextImage();
@@ -134,71 +130,23 @@ export default function HomePage() {
         <Card image="/images/upcoming.jpeg" />
       </div>
 
-      <div className="pt-24 " id="highlights">
-        <h2 className="text-[68px] flex justify-center w-full mb-24">
-          Highlights
-        </h2>
-        <div className="w-full relative h-[900px]">
-          {currentIndex !== 6 && (
-            <Image
-              fill
-              src={images[currentIndex]}
-              style={{
-                objectFit: "cover",
-                zIndex: "-5",
-                position: "absolute",
-                top: "0px",
-                left: "0px",
-              }}
-            />
-          )}
+      <div id="images" className="my-10 h-24 w-full flex justify-center">
+        <button
+          onClick={(e) => router.push("/highlights")}
+          className="w-[150px] h-14 outline-none rounded-lg text-black bg-gray-200 font-bold hover:text-white hover:bg-green-950 active:text-[wheat]"
+        >
+          View Images
+        </button>
+      </div>
 
-          {currentIndex === 6 && (
-            <div className="w-full h-full bg-[url(/images/obm.jpeg)] bg-cover bg-no-repeat">
-              <video
-                className="absolute inset-0 w-full h-full"
-                autoPlay
-                muted
-                loop
-                playsInline
-              >
-                <source src={images[currentIndex]} type="video/mp4" />
-                {/* Add other video sources for different formats if needed */}
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          )}
-          <div
-            className={`w-[200px] flex justify-center items-center  absolute bottom-16 gap-4 h-10 left-2/4 -translate-x-2/4`}
-          >
-            {images.map((image, index) => (
-              <div
-                className={`w-5 h-5 ${
-                  currentIndex === index ? "bg-[wheat]" : "bg-green-800"
-                } rounded-md bottom-5`}
-                onClick={(e) => changeImage(index)}
-              ></div>
-            ))}
-          </div>
-        </div>
+      <div id="highlights" className="flex flex-col items-center">
+        <h2 className="text-[68px] flex justify-center w-full mb-24">Highlights</h2>
+        <video width="640" height="360" autoplay className="block">
+          <source src="/videos/vid1.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </div>
-      <div
-        className={`${fullWidthOnAllScreens} flex justify-center items-center gap-24 border border-red-800 xsm:h-[100px] xsm:flex-col-reverse md:flex-row md:h-[50px] relative`}
-        id="socials"
-      >
-        <p className="xsm:absolute md:static bottom-0">
-          &copy; 2023 The Nirvana Experience
-        </p>
-        <div className="xsm:absolute md:static font-bold">
-          <Link href="https://instagram.com/the.nirvanaexperience?igshid=MzRlODBiNWFlZA==">
-            <Instagram style={{ fontSize: "50px" }} /> <span>Instagram</span>
-          </Link>
-          <Link href="https://www.tiktok.com/@thenirvanaexperience?_t=8gbCKqtzvwD&_r=1">
-            {" "}
-            <MusicNote style={{ fontSize: "50px" }} /> <span>Tiktok</span>
-          </Link>
-        </div>
-      </div>
+      <Footer/>
     </Fragment>
   );
 }
