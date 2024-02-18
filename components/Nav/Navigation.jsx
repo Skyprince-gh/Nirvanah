@@ -17,7 +17,7 @@ export default function Navbar() {
     router.push("/")
   }
   return (
-    <nav className="h-16 flex justify-center bg-black bg-opacity-60 min-w-full sm:min-w-screen-md md:min-w-screen-lg lg:min-w-screen-xl xl:min-w-screen-2xl">
+    <nav className="h-16 flex justify-center bg-black bg-opacity-60 w-full">
       <div className="flex justify-between w-full items-center">
         <div className="text-[wheat] xsm:text-2xl ml-2"><Image src="/images/logo.jpeg" width={50} height={50} onClick={navigateHome}/></div>
         <ul className="lg:w-1/3 md:w-2/4 flex justify-between text-[20px] text-[wheat] xsm:hidden md:flex">
